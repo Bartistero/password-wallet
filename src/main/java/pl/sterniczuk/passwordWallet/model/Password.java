@@ -1,17 +1,19 @@
 package pl.sterniczuk.passwordWallet.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
-@Entity
-public class Password extends IdModel {
 
+@Data
+@Entity
+@RequiredArgsConstructor
+public class Password{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     String Password;
-    Long idUser;
     String webAddress;
     String Description;
     String Login;
