@@ -25,9 +25,11 @@ public class User implements UserDetails {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Password> passwords;
 
-    public User(String username, String password) {
+
+    public User(String username, String password, String salt) {
         this.username = username;
         this.password = password;
+        this.salt = salt;
     }
 
     @Override
