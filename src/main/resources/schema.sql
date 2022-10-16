@@ -4,6 +4,7 @@ CREATE TABLE users
     username                VARCHAR(30),
     password       VARCHAR(30),
     salt                 VARCHAR(20),
+    type VARCHAR(15),
     PRIMARY KEY (id)
 );
 

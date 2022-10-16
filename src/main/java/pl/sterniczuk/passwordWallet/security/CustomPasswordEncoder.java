@@ -22,11 +22,11 @@ import static javax.xml.crypto.dsig.SignatureMethod.*;
 @ConfigurationProperties(prefix = "password.wallet")
 public class CustomPasswordEncoder implements PasswordEncoder {
 
-    String paper;
+    String pepper;
     UserRepository userRepository;
 
-    public void setPaper(String paper) {
-        this.paper = paper;
+    public void setPepper(String pepper) {
+        this.pepper = pepper;
     }
 
     @Override
@@ -36,13 +36,13 @@ public class CustomPasswordEncoder implements PasswordEncoder {
 
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        System.out.println(encodedPassword);
         User user = userRepository.findUserByPassword(encodedPassword);
         if (user == null) {
             return false;
         }
         String salt = user.getSalt();
-        String password = rawPassword + salt + paper;
+        String password = rawPassword + salt + pepper;
+        System.out.println(password);
         String sha512 = calculateSHA512(password);
         if (sha512.equals(encodedPassword)) {
             return true;
@@ -54,9 +54,9 @@ public class CustomPasswordEncoder implements PasswordEncoder {
     @Qualifier
     public String encode(String password, Boolean isSha) {
         if (isSha) {
-            return calculateSHA512(password + paper);
+            return calculateSHA512(password + pepper);
         } else {
-            return calculateHMAC(password + paper, "gdfgfd");
+            return calculateHMAC(password + pepper, "gdfgfd");
         }
     }
 

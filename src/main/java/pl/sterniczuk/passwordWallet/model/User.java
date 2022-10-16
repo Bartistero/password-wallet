@@ -9,8 +9,7 @@ import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -18,18 +17,20 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    String username;
-    String password;
-    String salt;
+    private String username;
+    private String password;
+    private String salt;
+    private String type;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Password> passwords;
 
 
-    public User(String username, String password, String salt) {
+    public User(String username, String password, String salt, String type) {
         this.username = username;
         this.password = password;
         this.salt = salt;
+        this.type = type;
     }
 
     @Override

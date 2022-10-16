@@ -21,9 +21,9 @@ public class RegistrationForm {
         password = password + salt;
         System.out.println(type);
         if (type.equals("SHA512")) {
-            return new User(username, passwordEncoder.encode(password, TRUE), salt);
+            return new User(username, passwordEncoder.encode(password, TRUE), salt, type);
         } else {
-            return new User(username, passwordEncoder.encode(password, FALSE), salt);
+            return new User(username, passwordEncoder.encode(password, FALSE), salt, type);
         }
     }
 }
