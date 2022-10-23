@@ -8,9 +8,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 @Data
 @Entity
+@Getter
+@Setter
 @Table(name = "users")
 public class User implements UserDetails {
 
@@ -23,7 +26,7 @@ public class User implements UserDetails {
     private String type;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private Set<Password> passwords;
+    private List<Passwords> passwords;
 
 
     public User(String username, String password, String salt, String type) {
@@ -31,6 +34,15 @@ public class User implements UserDetails {
         this.password = password;
         this.salt = salt;
         this.type = type;
+    }
+
+    public User(Long id, String username, String password, String salt, String type, List<Passwords> passwords) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.salt = salt;
+        this.type = type;
+        this.passwords = passwords;
     }
 
     @Override

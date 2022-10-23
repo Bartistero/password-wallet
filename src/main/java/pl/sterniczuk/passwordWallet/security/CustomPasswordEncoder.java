@@ -42,11 +42,13 @@ public class CustomPasswordEncoder implements PasswordEncoder {
         }
         String salt = user.getSalt();
         String password = rawPassword + salt + pepper;
-        System.out.println(password);
         String sha512 = calculateSHA512(password);
+        String hmac = calculateHMAC(password,"gdfgfd");
         if (sha512.equals(encodedPassword)) {
             return true;
-        } else {
+        } else if(hmac.equals(encodedPassword)){
+            return true;
+        }else{
             return false;
         }
     }
@@ -80,7 +82,7 @@ public class CustomPasswordEncoder implements PasswordEncoder {
         String result="";
         try {
             final byte[] byteKey = key.getBytes(StandardCharsets.UTF_8);
-            sha512Hmac = Mac.getInstance(DSA_SHA256);
+            sha512Hmac = Mac.getInstance("HmacSHA512");
             SecretKeySpec keySpec = new SecretKeySpec(byteKey, HMAC_SHA512);
             sha512Hmac.init(keySpec);
             byte[] macData = sha512Hmac.doFinal(text.getBytes(StandardCharsets.UTF_8));
