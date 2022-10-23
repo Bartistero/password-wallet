@@ -35,9 +35,10 @@ public class dataController {
     }
 
     @PostMapping("/changePassword")
-    public String changePassword(User users, @AuthenticationPrincipal User user) {
-        String password = users.getPassword() + user.getSalt();
-        if (user.getType().equals("SHA512")) {
+    public String changePassword(User newUsers, @AuthenticationPrincipal User userAuth) {
+        User user = userRepository.findByUsername(userAuth.getUsername());
+        String password = newUsers.getPassword() + user.getSalt();
+        if (userAuth.getType().equals("SHA512")) {
             password = passwordEncoder.encode(password, true);
         } else {
             password = passwordEncoder.encode(password, false);
