@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
+
 @Data
 @Entity
 @Getter
@@ -24,6 +24,8 @@ public class User implements UserDetails {
     private String password;
     private String salt;
     private String type;
+    @Transient
+    private String rawPassword;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Passwords> passwords;
@@ -70,5 +72,6 @@ public class User implements UserDetails {
         return true;
     }
 
-    public User() {}
+    public User() {
+    }
 }

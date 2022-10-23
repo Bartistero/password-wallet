@@ -22,15 +22,6 @@ public class Passwords {
     @JoinColumn(name = "idUser", nullable = false)
     private User user;
 
-    /*public Password(Long id, String password, String webAddress, String description, String login, User user) {
-        this.id = id;
-        this.password = password;
-        this.webAddress = webAddress;
-        this.description = description;
-        this.login = login;
-        this.user = user;
-    }*/
-
     public Passwords(String password, String webAddress, String description, String login, User user) {
         this.password = password;
         this.webAddress = webAddress;
