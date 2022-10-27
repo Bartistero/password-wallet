@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>data</title>
+</head>
+<body>
+<form method="POST" th:action="@{/logout}" id="logoutForm">
+    <input type="submit" value="Logout"/>
+</form>
+<form method="POST" th:action="@{/data/changePassword}" th:object="${user}">
+    <input th:field="*{password}" type="password" value="password">
+    <input type="submit" value="Change"/>
+</form>
+<p>Dodawnie hasła:</p>
+<form method="POST" th:action="@{/data/newPassword}" th:object="${newPass}" >
+    <label for="password">password: </label>
+    <input type="text" name="password" id="password"/><br/>
+
+    <label for="webAddress">webAddress: </label>
+    <input type="text" name="webAddress" id="webAddress"/><br/>
+
+    <label for="description">description: </label>
+    <input type="text" name="description" id="description"/><br/>
+
+    <label for="login">login: </label>
+    <input type="text" name="login" id="login"/><br/>
+
+    <input type="submit" value="dodaj hasło"/>
+
+</form>
+
+<div th:each="pass : ${password}">
+    <br>
+    <p style="display: inline"><b>Password: </b></p><span th:text="${pass.password}">password</span>
+    <p style="display: inline"> <b>Web address: </b></p><span th:text="${pass.webAddress}">webAddress</span>
+    <p style="display: inline"> <b>descirption </b></p><span th:text="${pass.description}">description</span>
+    <p style="display: inline"> <b>login:</b></p><span th:text="${pass.login}">login</span>
+</div>
+</body>
+</html>
