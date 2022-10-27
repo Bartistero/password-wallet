@@ -59,7 +59,7 @@ public class dataController {
         String rawPassword = (String) SecurityContextHolder.getContext().getAuthentication().getCredentials();
         List<Passwords> usersPasswordList = passwordRepository.getPasswordByUser(user);
         usersPasswordList = decryptPassword(usersPasswordList, rawPassword);
-        usersPasswordList = encryptPassword(usersPasswordList,newUsers.getPassword());
+        usersPasswordList = encryptPassword(usersPasswordList, newUsers.getPassword());
         user.setPassword(password);
 
         userRepository.save(user);
