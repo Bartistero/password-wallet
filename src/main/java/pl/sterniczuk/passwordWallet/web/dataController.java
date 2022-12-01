@@ -2,13 +2,15 @@ package pl.sterniczuk.passwordWallet.web;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import pl.sterniczuk.passwordWallet.crypto.AesSenc;
-import pl.sterniczuk.passwordWallet.model.Passwords;
 import pl.sterniczuk.passwordWallet.model.PasswordRepository;
+import pl.sterniczuk.passwordWallet.model.Passwords;
 import pl.sterniczuk.passwordWallet.model.User;
 import pl.sterniczuk.passwordWallet.model.UserRepository;
 import pl.sterniczuk.passwordWallet.security.CustomPasswordEncoder;

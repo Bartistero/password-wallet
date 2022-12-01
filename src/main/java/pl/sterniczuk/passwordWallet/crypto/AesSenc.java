@@ -13,13 +13,13 @@ public class AesSenc {
     public static String encrypt(String data, String pass) throws Exception {
         byte[] keyToEncrypt = calculateMD5(pass);
         Key key = new SecretKeySpec(keyToEncrypt, ALGO);
-        return encrypt(data,key);
+        return encrypt(data, key);
     }
 
     public static String decrypt(String data, String pass) throws Exception {
         byte[] keyToEncrypt = calculateMD5(pass);
         Key key = new SecretKeySpec(keyToEncrypt, ALGO);
-        return decrypt(data,key);
+        return decrypt(data, key);
     }
 
     //encrypts string and returns encrypted string

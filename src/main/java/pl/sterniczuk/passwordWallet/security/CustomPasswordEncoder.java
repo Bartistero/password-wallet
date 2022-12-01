@@ -16,7 +16,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
-import static javax.xml.crypto.dsig.SignatureMethod.*;
+import static javax.xml.crypto.dsig.SignatureMethod.HMAC_SHA512;
 
 @Service
 @ConfigurationProperties(prefix = "password.wallet")
@@ -43,12 +43,12 @@ public class CustomPasswordEncoder implements PasswordEncoder {
         String salt = user.getSalt();
         String password = rawPassword + salt + pepper;
         String sha512 = calculateSHA512(password);
-        String hmac = calculateHMAC(password,"gdfgfd");
+        String hmac = calculateHMAC(password, "gdfgfd");
         if (sha512.equals(encodedPassword)) {
             return true;
-        } else if(hmac.equals(encodedPassword)){
+        } else if (hmac.equals(encodedPassword)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -77,9 +77,9 @@ public class CustomPasswordEncoder implements PasswordEncoder {
         }
     }
 
-    public static String calculateHMAC(String text, String key){
+    public static String calculateHMAC(String text, String key) {
         Mac sha512Hmac;
-        String result="";
+        String result = "";
         try {
             final byte[] byteKey = key.getBytes(StandardCharsets.UTF_8);
             sha512Hmac = Mac.getInstance("HmacSHA512");

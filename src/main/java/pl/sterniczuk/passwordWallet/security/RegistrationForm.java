@@ -1,11 +1,8 @@
 package pl.sterniczuk.passwordWallet.security;
 
 import lombok.Data;
-import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.keygen.KeyGenerators;
 import pl.sterniczuk.passwordWallet.model.User;
-
-import java.util.List;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
