@@ -15,7 +15,18 @@ Create Table passwords
     web_address VARCHAR(256),
     description VARCHAR(256),
     login       VARCHAR(30),
-    idUser     VARCHAR(4) NOT NULL,
+    idUser      VARCHAR(4) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (id) REFERENCES users (id)
 );
+
+Create Table login_history
+(
+    id     bigint     not null,
+    data   date,
+    type   varchar(30),
+    ip     varchar(250),
+    idUser VARCHAR(4) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (id) REFERENCES users (id)
+)

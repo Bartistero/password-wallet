@@ -32,6 +32,9 @@ public class User implements UserDetails {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Passwords> passwords;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<LoginHistory> loginHistories;
+
 
     public User(String username, String password, String salt, String type) {
         this.username = username;
