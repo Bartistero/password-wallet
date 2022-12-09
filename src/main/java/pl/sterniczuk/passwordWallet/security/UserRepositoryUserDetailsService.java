@@ -10,6 +10,7 @@ import pl.sterniczuk.passwordWallet.model.User;
 import pl.sterniczuk.passwordWallet.model.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalTime;
 
 @Service
 public class UserRepositoryUserDetailsService implements UserDetailsService {
@@ -29,10 +30,22 @@ public class UserRepositoryUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
         User user = userRepo.findByUsername(username);
+        Boolean block = user.getBlock();
         if (user != null) {
+            if (block) {
+                if (LocalTime.now().isAfter(user.getBlockTime().plusSeconds(30))) {
+                    user.setBlock(false);
+                    user.setAttempt(0);
+                    user.setBlockTime(null);
+                    userRepo.save(user);
+                    return user;
+                } else {
+                    throw new UsernameNotFoundException(
+                            "User '" + username + "' not found");
+                }
+            }
             return user;
         }
-
         throw new UsernameNotFoundException(
                 "User '" + username + "' not found");
     }

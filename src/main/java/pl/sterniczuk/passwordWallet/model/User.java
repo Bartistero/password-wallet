@@ -32,7 +32,7 @@ public class User implements UserDetails {
 
     private int attempt;
 
-    private boolean block;
+    private Boolean block;
     private LocalTime blockTime;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
