@@ -37,8 +37,6 @@ Create Table block_ip_address
 (
     id      bigint not null,
     ip      varchar(250),
-    attempt int,
-    blocked boolean,
     data    date,
     PRIMARY KEY (id)
 )

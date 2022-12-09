@@ -21,7 +21,14 @@ public class BlockIpAddress {
     private Long id;
 
     private String ip;
-    private String attempt;
     private LocalTime data;
 
+    public BlockIpAddress(String ip, LocalTime data) {
+        this.ip = ip;
+        this.data = data;
+    }
+
+    public BlockIpAddress() {
+
+    }
 }

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface LoginHistoryRepository extends CrudRepository<LoginHistory, Long> {
     List<LoginHistory> getAllByUserId(Long id);
+
+    List<LoginHistory> getAllByIpAndType(String ip, String type);
 }

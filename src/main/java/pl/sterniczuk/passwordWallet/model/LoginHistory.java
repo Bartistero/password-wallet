@@ -16,7 +16,6 @@ public class LoginHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private LocalDate date;
     private String type;
     private String ip;
