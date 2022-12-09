@@ -31,4 +31,14 @@ Create Table login_history
     idUser VARCHAR(4) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (id) REFERENCES users (id)
+);
+
+Create Table block_ip_address
+(
+    id      bigint not null,
+    ip      varchar(250),
+    attempt int,
+    blocked boolean,
+    data    date,
+    PRIMARY KEY (id)
 )
