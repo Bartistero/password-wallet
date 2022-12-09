@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class LoginFailedHandler implements AuthenticationFailureHandler {
     private LoginHistoryRepository loginRepository;
@@ -40,6 +41,14 @@ public class LoginFailedHandler implements AuthenticationFailureHandler {
         if (user != null) {
             LoginHistory loginHistory = new LoginHistory(LocalDate.now(), "Niepoprawne", getClientIP(request), user);
             loginRepository.save(loginHistory);
+            int attempt = user.getAttempt();
+            attempt++;
+            user.setAttempt(attempt);
+            if (attempt >= 3) {
+                user.setBlock(true);
+                user.setBlockTime(LocalTime.now());
+            }
+            userRepository.save(user);
         }
         redirectStrategy.sendRedirect(request, response, "/login");
     }

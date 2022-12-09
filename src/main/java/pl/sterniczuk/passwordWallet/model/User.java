@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -28,6 +29,11 @@ public class User implements UserDetails {
     private String type;
     @Transient
     private String rawPassword;
+
+    private int attempt;
+
+    private boolean block;
+    private LocalTime blockTime;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Passwords> passwords;

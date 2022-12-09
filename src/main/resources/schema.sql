@@ -5,6 +5,8 @@ CREATE TABLE users
     password VARCHAR(256),
     salt     VARCHAR(20),
     type     VARCHAR(15),
+    attempt  int,
+    block    boolean,
     PRIMARY KEY (id)
 );
 
