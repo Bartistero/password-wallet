@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import pl.sterniczuk.passwordWallet.crypto.AesSenc;
-import pl.sterniczuk.passwordWallet.model.PasswordRepository;
-import pl.sterniczuk.passwordWallet.model.Passwords;
-import pl.sterniczuk.passwordWallet.model.User;
-import pl.sterniczuk.passwordWallet.model.UserRepository;
+import pl.sterniczuk.passwordWallet.model.*;
 import pl.sterniczuk.passwordWallet.security.CustomPasswordEncoder;
 
 import java.util.List;
@@ -25,14 +22,13 @@ public class dataController {
     private UserRepository userRepository;
     private PasswordRepository passwordRepository;
 
-    @GetMapping
-    public String dataForm(Model model, @AuthenticationPrincipal User user) throws Exception {
-        String rawPassword = (String) SecurityContextHolder.getContext().getAuthentication().getCredentials();
-        List<Passwords> passwordsList = decryptPassword(passwordRepository.getPasswordByUser(user), rawPassword);
-        model.addAttribute("user", new User());
-        model.addAttribute("password", passwordsList);
-        model.addAttribute("newPass", new Passwords());
-        return "data";
+    private LoginHistoryRepository loginHistoryRepository;
+
+    public dataController(CustomPasswordEncoder passwordEncoder, UserRepository userRepository, PasswordRepository passwordRepository, LoginHistoryRepository loginHistoryRepository) {
+        this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
+        this.passwordRepository = passwordRepository;
+        this.loginHistoryRepository = loginHistoryRepository;
     }
 
     @PostMapping("/newPassword")
@@ -69,10 +65,16 @@ public class dataController {
         return "redirect:/";
     }
 
-    public dataController(CustomPasswordEncoder passwordEncoder, UserRepository userRepository, PasswordRepository passwordRepository) {
-        this.passwordEncoder = passwordEncoder;
-        this.userRepository = userRepository;
-        this.passwordRepository = passwordRepository;
+    @GetMapping
+    public String dataForm(Model model, @AuthenticationPrincipal User user) throws Exception {
+        String rawPassword = (String) SecurityContextHolder.getContext().getAuthentication().getCredentials();
+        List<Passwords> passwordsList = decryptPassword(passwordRepository.getPasswordByUser(user), rawPassword);
+        List<LoginHistory> loginHistory = loginHistoryRepository.getAllByUserId(user.getId());
+        model.addAttribute("user", new User());
+        model.addAttribute("password", passwordsList);
+        model.addAttribute("newPass", new Passwords());
+        model.addAttribute("loginHistory", loginHistory);
+        return "data";
     }
 
     private List<Passwords> decryptPassword(List<Passwords> passwordsList, String rawPassword) throws Exception {

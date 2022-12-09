@@ -9,7 +9,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import pl.sterniczuk.passwordWallet.model.LoginHistoryRepository;
 import pl.sterniczuk.passwordWallet.model.UserRepository;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Configuration
 @EnableWebSecurity
@@ -18,6 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailsService userDetailsService;
     private UserRepository userRepository;
+    private LoginHistoryRepository loginRepository;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -29,7 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/data", true)
+                .successHandler(successHandler())
+                .failureHandler(failedHandler())
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")
@@ -47,11 +52,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new CustomPasswordEncoder(userRepository);
     }
 
+    @Bean
+    public LoginSuccessHandler successHandler() {
+        return new LoginSuccessHandler(loginRepository, userRepository);
+    }
+
+    @Bean
+    public LoginFailedHandler failedHandler() {
+        return new LoginFailedHandler(loginRepository, userRepository);
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(encoder());
         auth.eraseCredentials(false);
+    }
+
+    private String getClientIP(HttpServletRequest request) {
+        String xfHeader = request.getHeader("X-Forwarded-For");
+        if (xfHeader == null) {
+            return request.getRemoteAddr();
+        }
+        return xfHeader.split(",")[0];
     }
 }

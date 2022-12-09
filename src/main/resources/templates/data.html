@@ -33,9 +33,17 @@
 <div th:each="pass : ${password}">
     <br>
     <p style="display: inline"><b>Password: </b></p><span th:text="${pass.password}">password</span>
-    <p style="display: inline"> <b>Web address: </b></p><span th:text="${pass.webAddress}">webAddress</span>
-    <p style="display: inline"> <b>descirption </b></p><span th:text="${pass.description}">description</span>
-    <p style="display: inline"> <b>login:</b></p><span th:text="${pass.login}">login</span>
+    <p style="display: inline"><b>Web address: </b></p><span th:text="${pass.webAddress}">webAddress</span>
+    <p style="display: inline"><b>descirption </b></p><span th:text="${pass.description}">description</span>
+    <p style="display: inline"><b>login:</b></p><span th:text="${pass.login}">login</span>
+</div>
+<br>
+<p>Historia logowania:</p>
+<br>
+<div th:each="log : ${loginHistory}">
+    <p style="display: inline"><b>Password: </b></p><span th:text="${log.date}">data</span>
+    <p style="display: inline"><b>Password: </b></p><span th:text="${log.type}">typ</span>
+    <p style="display: inline"><b>Password: </b></p><span th:text="${log.ip}">ip</span>
 </div>
 </body>
 </html>
