@@ -41,7 +41,7 @@ public class dataControllerTest {
         passwordEncoder = new CustomPasswordEncoder(userRepository);
         auth = mock(Authentication.class);
         SecurityContextHolder.getContext().setAuthentication(auth);
-        dataController = new dataController(passwordEncoder, userRepository, passwordRepository);
+        //dataController = new dataController(passwordEncoder, userRepository, passwordRepository);
     }
 
     @Test

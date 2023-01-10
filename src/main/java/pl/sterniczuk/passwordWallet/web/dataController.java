@@ -65,6 +65,17 @@ public class dataController {
         return "redirect:/";
     }
 
+    @PostMapping("/updatePass")
+    public String updatePassword(Passwords passwords, @AuthenticationPrincipal User user) throws Exception {
+        System.out.println(passwords.getPassword());
+        String rawPassword = (String) SecurityContextHolder.getContext().getAuthentication().getCredentials();
+        String pass = AesSenc.encrypt(passwords.getPassword(), rawPassword);
+        Passwords passwords1 = passwordRepository.findPasswordsById(passwords.getId());
+        passwords1.setPassword(pass);
+        passwordRepository.save(passwords1);
+        return "redirect:/data";
+    }
+
     @GetMapping
     public String dataForm(Model model, @AuthenticationPrincipal User user) throws Exception {
         String rawPassword = (String) SecurityContextHolder.getContext().getAuthentication().getCredentials();

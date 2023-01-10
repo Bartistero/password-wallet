@@ -19,6 +19,7 @@ public class Passwords {
     private String webAddress;
     private String description;
     private String login;
+    private Boolean noEdit;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "idUser", nullable = false)

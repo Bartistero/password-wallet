@@ -18,6 +18,7 @@ Create Table passwords
     description VARCHAR(256),
     login       VARCHAR(30),
     idUser      VARCHAR(4) NOT NULL,
+    no_edit     BOOLEAN,
     PRIMARY KEY (id),
     FOREIGN KEY (id) REFERENCES users (id)
 );
@@ -35,8 +36,8 @@ Create Table login_history
 
 Create Table block_ip_address
 (
-    id      bigint not null,
-    ip      varchar(250),
-    data    date,
+    id   bigint not null,
+    ip   varchar(250),
+    data date,
     PRIMARY KEY (id)
 )
