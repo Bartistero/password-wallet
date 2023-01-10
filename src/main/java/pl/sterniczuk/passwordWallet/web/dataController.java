@@ -76,6 +76,17 @@ public class dataController {
         return "redirect:/data";
     }
 
+    @PostMapping("/share")
+    public String sharePassword(Passwords passwords, @AuthenticationPrincipal User user) throws Exception {
+        String pass = AesSenc.encrypt(passwords.getPassword(), "zaq1@WSX");
+        passwords.setPassword(pass);
+        User users = userRepository.findByUsername(passwords.getLogin());
+        passwords.setUser(users);
+        passwords.setNoEdit(Boolean.TRUE);
+        passwordRepository.save(passwords);
+        return "redirect:/data";
+    }
+
     @GetMapping
     public String dataForm(Model model, @AuthenticationPrincipal User user) throws Exception {
         String rawPassword = (String) SecurityContextHolder.getContext().getAuthentication().getCredentials();

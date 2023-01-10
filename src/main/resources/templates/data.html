@@ -43,7 +43,8 @@
             <button type="submit">Update</button>
         </form>
         <form method="post" th:action="@{/data/share}" th:object="${pass}">
-             <input name="loging" th:value="${pass.login}" type="text">
+            <input name="login" th:value="${pass.login}" type="text">
+            <input name="password" th:value="${pass.password}" type="hidden">
             <button type="submit">Share</button>
         </form>
     </span>
